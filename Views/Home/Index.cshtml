@@ -6,29 +6,66 @@
 <div class="jumbotron">
     <h1>Weather</h1>
     <p class="lead">Click the button to get a weather forecast.</p>
-    <p>Enter</p>
 
     <button class="btn btn-default" id="weatherForecast">Get Weather</button>
+    <br /> <br />
+           <form>
+               Sign:<br>
+                    <select id="sign">
+                        <option value="aquarius">Aquarius</option>
+                        <option value="pisces">Pisces</option>
+                        <option value="aries">Aries</option>
+                        <option value="taurus">Taurus</option>
+                        <option value="gemini">Gemini</option>
+                        <option value="cancer">Cancer</option>
+                        <option value="leo">Leo</option>
+                        <option value="virgo">Virgo</option>
+                        <option value="libra">Libra</option>
+                        <option value="scorpio">Scorpio</option>
+                        <option value="sagittarius">Sagittarius</option>
+                        <option value="capricorn">Capricorn</option>
+                    </select>
+               <input type="submit" id="getHoroscope" value="Get Horoscope">
+           </form>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-   
+
     <script language="javascript">
-        $(document).ready(function () {
-            
-            $("#weatherForecast").click(function () {
+
+        $(document).ready(function() {
+
+            $("#weatherForecast").click(function() {
                 $.ajax({
                     type: "GET",
                     url: 'https://forecast.weather.gov/MapClick.php?lat=38.4247341&lon=-86.9624089&FcstType=json',
-                    success: function (data) {
+                    success: function(data) {
                         alert(data.data.text);
+                    },
+                    error: function() {
+                        alert("Error while inserting data");
+                    }
+                });
+            });
+
+            $("#getHoroscope").click(function() {
+                const sign = document.getElementById("sign").value;
+                getHoroscope(sign);
+            });
+
+            function getHoroscope() {
+                $.ajax({
+                    type: 'POST',
+                    url: `https://aztro.sameerkumar.website?sign=${sign}&day=today`,
+                    success: function (data) {
+                        alert(data.description);
                     },
                     error: function () {
                         alert("Error while inserting data");
                     }
                 });
-            });
+            }
         });
     </script>
 }
