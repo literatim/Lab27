@@ -11,20 +11,26 @@
     <br /> <br />
            <form>
                Sign:<br>
-                    <select id="sign">
-                        <option value="aquarius">Aquarius</option>
-                        <option value="pisces">Pisces</option>
-                        <option value="aries">Aries</option>
-                        <option value="taurus">Taurus</option>
-                        <option value="gemini">Gemini</option>
-                        <option value="cancer">Cancer</option>
-                        <option value="leo">Leo</option>
-                        <option value="virgo">Virgo</option>
-                        <option value="libra">Libra</option>
-                        <option value="scorpio">Scorpio</option>
-                        <option value="sagittarius">Sagittarius</option>
-                        <option value="capricorn">Capricorn</option>
-                    </select>
+               <select id="sign">
+                   <option value="aquarius">Aquarius</option>
+                   <option value="pisces">Pisces</option>
+                   <option value="aries">Aries</option>
+                   <option value="taurus">Taurus</option>
+                   <option value="gemini">Gemini</option>
+                   <option value="cancer">Cancer</option>
+                   <option value="leo">Leo</option>
+                   <option value="virgo">Virgo</option>
+                   <option value="libra">Libra</option>
+                   <option value="scorpio">Scorpio</option>
+                   <option value="sagittarius">Sagittarius</option>
+                   <option value="capricorn">Capricorn</option>
+               </select><br/>
+               Date:<br/>
+               <select id="date">
+                   <option value="yesterday">Yesterday</option>
+                   <option value="today">Today</option>
+                   <option value="tomorrow">Tomorrow</option>
+               </select><br/>
                <input type="submit" id="getHoroscope" value="Get Horoscope">
            </form>
 </div>
@@ -50,18 +56,20 @@
             });
 
             $("#getHoroscope").click(function() {
-                const sign = document.getElementById("sign").value;
-                getHoroscope(sign);
+                var sign = document.getElementById("sign").value;
+                var date = document.getElementById("date").value;
+                getHoroscope(sign, date);
             });
 
             function getHoroscope() {
                 $.ajax({
-                    type: 'POST',
-                    url: `https://aztro.sameerkumar.website?sign=${sign}&day=today`,
-                    success: function (data) {
+                    type: "POST",
+                    dataType: "json",
+                    url: `https://aztro.sameerkumar.website?sign=${sign}&day=${date}`,
+                    success: function(data) {
                         alert(data.description);
                     },
-                    error: function () {
+                    error: function() {
                         alert("Error while inserting data");
                     }
                 });
